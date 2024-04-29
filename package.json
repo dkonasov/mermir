@@ -1,0 +1,32 @@
+{
+  "name": "mermir",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/run.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": ["build", "system", "task", "runner", "series", "parallel"],
+  "author": "Dmitrii Konasov, <d.konasov@yandex.ru>",
+  "license": "ISC",
+  "dependencies": {
+    "mermaid": "^10.9.0",
+    "yargs": "^17.7.2"
+  },
+  "type": "module",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "vitest": "^1.5.2"
+  },
+  "bin": {
+    "mermir": "./bin/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkonasov/mermir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dkonasov/mermir/issues"
+  },
+  "homepage": "https://github.com/dkonasov/mermir#readme"
+}
