@@ -1,58 +1,58 @@
 /**
- * 
- * @param { string } nodeText 
+ *
+ * @param { string } nodeText
  * @param { Record<string, import('./types/node').MermirNode>} nodeMap
  * @returns { import('./types/node').MermirNode }
  */
 function getNodeFromText(nodeText, nodeMap) {
-   let node = nodeMap[nodeText];
+  let node = nodeMap[nodeText];
 
-   if (!node) {
+  if (!node) {
     node = { value: nodeText };
     nodeMap[nodeText] = node;
-   }
+  }
 
-   return node;
+  return node;
 }
 
 /**
- * 
- * @param {string} diagram 
- * @returns 
+ *
+ * @param {string} diagram
+ * @returns
  */
 export function buildTree(diagram) {
-    /**
-     * @type { Map<import('./types/node').MermirNode, any> }
-     */
-    const rootNodesMap = new Map();
+  /**
+   * @type { Map<import('./types/node').MermirNode, any> }
+   */
+  const rootNodesMap = new Map();
 
-    /**
-     * @type { Record<string, import('./types/node').MermirNode> }
-     */
-    let nodeMap = {};
+  /**
+   * @type { Record<string, import('./types/node').MermirNode> }
+   */
+  let nodeMap = {};
 
-    const regex = /\n|(\r\n)/;
+  const regex = /\n|(\r\n)/;
 
-    const rows = regex[Symbol.split](diagram);
+  const rows = regex[Symbol.split](diagram);
 
-    rows.forEach((row) => {
-        if (!row) {
-            return;
-        }
+  rows.forEach((row) => {
+    if (!row) {
+      return;
+    }
 
-        const [ parent, child ] = row.split('-->');
+    const [parent, child] = row.split("-->");
 
-        const parentNode = getNodeFromText(parent, nodeMap);
-        const childNode = getNodeFromText(child, nodeMap);
+    const parentNode = getNodeFromText(parent, nodeMap);
+    const childNode = getNodeFromText(child, nodeMap);
 
-        if (!parentNode.children) {
-            parentNode.children = [];
-        }
+    if (!parentNode.children) {
+      parentNode.children = [];
+    }
 
-        parentNode.children.push(childNode);
-        rootNodesMap.set(parentNode, true);
-        rootNodesMap.delete(childNode);
-    });
+    parentNode.children.push(childNode);
+    rootNodesMap.set(parentNode, true);
+    rootNodesMap.delete(childNode);
+  });
 
-    return Array.from(rootNodesMap.keys());
+  return Array.from(rootNodesMap.keys());
 }
