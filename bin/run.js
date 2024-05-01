@@ -14,12 +14,17 @@ yargs(hideBin(process.argv))
     "run",
     "run the flow",
     () => {},
-    async () => {
-      const configContents = await parseFile(resolve("./mermir.mermaid"));
+    async (argv) => {
+      const configContents = await parseFile(resolve(argv.workflow ?? "./mermir.mermaid"));
       const tasksTree = buildTree(configContents);
       const tasksQueue = makeTasksQueue(tasksTree);
 
       runQueue(tasksQueue);
     },
   )
+  .option('workflow', {
+    alias: 'w',
+    description: 'path to custom workflow file',
+    type: 'string',
+  })
   .parse();
